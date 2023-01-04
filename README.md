@@ -24,6 +24,7 @@ pbibtex output/output.aux
 パッケージ`subfiles`を利用しています。
 
 スライドを追加する場合は、`contents`の中のファイルを編集してください。
+`contents`にファイルを追加したときは`main.tex`で参照するのを忘れないでください。
 
 ## 色設定について
 
