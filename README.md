@@ -19,6 +19,11 @@ pbibtex output/output.aux
 
 出力結果は、`output/output.pdf`です。
 
+## ファイルの編集について
+
+スライドの内容は、`contents`にファイルを追加して、`main.tex`で参照すれば記述することができます。
+パッケージとして`subfiles`を利用しています。
+
 ## 色設定について
 
 このテンプレートは、`metropolis`というテーマを利用しています。
