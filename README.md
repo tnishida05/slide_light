@@ -17,14 +17,14 @@ pbibtex output/output.aux
 
 その他、GUIのソフトを使う場合も、`lualatex`でのコンパイルであれば問題ありません。
 
-出力結果は、`output/output.pdf`です。
+出力結果は、[`output/output.pdf`](/output/output.pdf)です。
 
 ## ファイルの編集について
 
 パッケージ`subfiles`を利用しています。
 
-スライドを追加する場合は、`contents`の中のファイルを編集してください。
-`contents`にファイルを追加したときは`main.tex`で参照するのを忘れないでください。
+スライドを追加する場合は、[`contents`](/contents)の中のファイルを編集してください。
+[`contents`](/contents)にファイルを追加したときは[`main.tex`](/main.tex)で参照するのを忘れないでください。
 
 ## 色設定について
 
