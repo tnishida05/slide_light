@@ -1,0 +1,273 @@
+\documentclass[10pt,unicode]{beamer}
+%\documentclass[10pt,aspectratio=169,unicode]{beamer}
+
+%% 日本語
+\usepackage{luatexja}
+
+%% 作図用パッケージ
+\usepackage{graphicx,xcolor}
+\usepackage{tikz}
+\usetikzlibrary{intersections,calc,arrows,cd,decorations.pathmorphing}
+\tikzset{ ampersand replacement=\& }
+
+%% 位置調整用パッケージ
+\usepackage[absolute,overlay]{textpos}
+\usepackage{adjustbox}
+\usepackage{multicol}
+
+%% 画像フォルダ指定
+\graphicspath{{./images}}
+
+%% beamerのテーマの設定
+\usetheme[block=fill,progressbar=frametitle,numbering=fraction]{metropolis}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+%% Section見出しページを再定義 (見出しの幅を広げる)
+\makeatletter
+\setbeamertemplate{section page}{
+  \centering
+  \begin{minipage}{\linewidth}
+    \raggedright
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\\[-1ex]
+    \usebeamertemplate*{progress bar in section page}
+    \par
+    \ifx\insertsubsectionhead\@empty\else%
+      \usebeamercolor[fg]{subsection title}%
+      \usebeamerfont{subsection title}%
+      \insertsubsectionhead
+    \fi
+  \end{minipage}
+  \par
+  \vspace{\baselineskip}
+}
+\makeatother
+
+%% フォント指定(必ずbeamerテーマ設定の後)
+%\usepackage[ipaex]{luatexja-preset}
+\usepackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
+%\usepackage[haranoaji,deluxe]{luatexja-preset}
+\usepackage{luatexja-fontspec}
+% 欧文フォント (順に rm,sf,tt)
+\setmainfont[Ligatures=TeX]{TeXGyreTermes}
+\setsansfont[Ligatures=TeX]{TeXGyreHeros}
+\setmonofont[Ligatures=TeX]{Inconsolatazi4}
+% 日本語フォント (順に rm,sf,tt)
+\setmainjfont[BoldFont=HaranoAjiMincho-Bold]{HaranoAjiMincho-Regular}
+\setsansjfont[BoldFont=HaranoAjiGothic-Medium]{HaranoAjiGothic-Regular}
+%\setmonojfont[Ligatures=TeX]{Inconsolatazi4}
+
+% ギリシャ語などのスペース調整
+\ltjsetparameter{jacharrange={-2,-3,-8}}
+
+%% 和文の既定フォントをゴシック体に変更
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+
+%% 色の設定
+\definecolor{BrightGray}{HTML}{F6F6F6}
+\definecolor{LightGray}{HTML}{E6E6E6}
+\definecolor{Gray}{HTML}{DDDDDD}
+\definecolor{DarkGray}{HTML}{222222}
+\definecolor{BrightBlue}{HTML}{4a5560}
+\definecolor{LightBlue}{HTML}{303b46}
+\definecolor{BlackBlue}{HTML}{16212c}
+%\definecolor{mLightBrown}{HTML}{EB811B} % metropolis default color
+%\definecolor{mLightGreen}{HTML}{14B03D} % metropolis default color
+
+% 基本色
+\colorlet{fgcolor}{DarkGray}
+\colorlet{bgcolor}{white}
+% その他の色
+\colorlet{titlebgcolor}{LightGray}
+\colorlet{bodybgcolor}{BrightGray}
+\colorlet{examplefgcolor}{mLightGreen!93!black}
+\colorlet{alertfgcolor}{mLightBrown!93!black}
+\colorlet{structurefgcolor}{cyan!93!black}
+\colorlet{footlinebgcolor}{BrightGray}
+
+% 配色
+\setbeamercolor{frametitle}{fg=fgcolor,bg=bgcolor}
+\setbeamercolor{normal text}{fg=fgcolor,bg=bgcolor}
+\setbeamercolor{block title}{fg=fgcolor,bg=titlebgcolor}
+\setbeamercolor{block body}{fg=fgcolor,bg=bodybgcolor}
+\setbeamercolor{example text}{fg=examplefgcolor}
+\setbeamercolor{alerted text}{fg=alertfgcolor}
+%\setbeamercolor{structure}{fg=structurefgcolor}
+%\setbeamercolor{footline}{fg=fgcolor,bg=footlinebgcolor}
+
+%% 余白の調整
+% タイトルページのemailやlogoをtikzで作っているので変数(\lmargin,\rmargin)を変更すること
+\newcommand{\lmargin}{2em}
+\newcommand{\rmargin}{2em}
+% 左右の空白
+\setbeamersize{text margin left=\lmargin, text margin right=\rmargin}
+% 注釈の文字サイズ
+\setbeamerfont{footnote}{size=\tiny}
+
+%% footline 再定義
+% ページ番号の文字サイズ
+\setbeamerfont{frame numbering}{size=\scriptsize}
+% 変数を変更して高さを調整 ( デフォルトは 3ex )
+\newcommand{\footlineheight}{1ex}
+\setbeamertemplate{footline}{%
+\begin{beamercolorbox}[wd=\textwidth, sep=\footlineheight]{footline}%
+\usebeamerfont{page number in head/foot}%
+\usebeamertemplate*{frame footer}%
+\hfill%
+\usebeamertemplate*{frame numbering}%
+\end{beamercolorbox}%
+}
+
+%\setbeamerfont{normal text}{size=\normalsize, series=\bfseries}
+%\AtBeginDocument{\usebeamerfont{normal text}}
+
+%% 非表示要素を透過
+\setbeamercovered{transparent=30}
+
+%% ナビゲーションバー(右下の灰色のやつ)を消す
+%\setbeamertemplate{navigation symbols}{}
+
+%% ファイル分割
+\usepackage{subfiles}
+
+%% enumerate環境の番号定義を簡単にする
+\usepackage{enumerate}
+
+%% ルビ
+\usepackage{pxrubrica}
+
+%% AMS関連と数学記号
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amscd}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+
+%% 人名定義
+\newcommand{\Cech}{\v{C}ech}
+\newcommand{\Hormander}{H\"{o}rmander}
+\newcommand{\Frechet}{Fr\'echet}
+
+%% 数学記号
+\newcommand{\id}{\mathrm{id}}
+
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+\newcommand{\Coim}{\mathrm{Coim}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\newcommand{\Coker}{\mathrm{Coker}}
+
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\dist}{\mathrm{dist}}
+
+\newcommand{\ssubset}{\subset\subset}
+\newcommand{\restr}[2]{\left.#1\right|_{#2}}
+\newcommand{\cl}[1]{{\overline{#1}}}
+
+% 内積
+\def\i<#1>{\langle #1 \rangle}
+\def\I<#1>{\left\langle #1 \right\rangle}
+
+% double prime
+\newcommand{\dprime}{{\prime\prime}}
+
+% \mid を相対化
+% \left{ x \relmid something \right} を綺麗に表示
+\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}}
+\newcommand{\relmid}{\mathrel{}\middle|\mathrel{}}
+
+% ギリシャ文字 カイ を少し持ち上げる
+\newcommand{\rchi}{\raisebox{1.5pt}{$\chi$}}
+
+% TODO を目立たせる
+\newcommand{\TODO}{\textcolor{red}{TODO}}
+
+%%--amsthm(定理の設定)
+\usepackage{amsthm}
+\newtheoremstyle{mystyle}%   % 定理スタイル名
+    {}%                      % 上のスペース
+    {}%                      % 下のスペース
+    {\normalfont}%           % 定理内でのフォント
+    {}%                      % インデント
+    {\gtfamily\bfseries}%    % 定理の見出しフォント(証明の見出しは別で指定)
+    {}%                      % 定理見出し後の文字
+    {0.5em}%                 % 見出し後の空白
+    {}%                      % 見出しの書式( \thmname{#1}\thmnumber{ #2}\thmnote{ (#3)} など)
+\theoremstyle{mystyle}
+\newtheorem{thm}{定理}[section]
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{sym}[thm]{記号}
+\newtheorem{cor}[thm]{系}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{eg}[thm]{例}
+\renewcommand{\proofname}{\gtfamily\bfseries 証明\,}
+%%--end_of_amsthm
+
+%% 参考文献
+%\bibliographystyle{jplain} % アルファベット順
+\bibliographystyle{junsrt} % 引用順
+\setbeamertemplate{bibliography item}[text]
+
+%% URL を \url{ ～ } で書ける. リンクの色は印刷用に消している.
+%% (その他のパッケージが読み込まれたか確認するので, なるべく後ろで読み込む)
+%% bookmark は, hyperrefを含む. xurl は, 長いリンクを快適にするパッケージ.
+\usepackage{bookmark}
+\usepackage{xurl}
+\hypersetup{unicode,bookmarksnumbered=true,hidelinks,final}
+
+%% タイトル
+\title[]{
+  いい感じに設定されたmetropolisテンプレ
+}
+\subtitle{
+  タイトルページの四つ角にロゴも入れられる
+}
+\author[お名前]{あなたのお名前\inst{1}}
+\institute[所属]{\inst{1}所属している団体名}
+\date[日付]{発表する研究集会情報や日付など}
+
+%% ここから本文
+\begin{document}
+
+  %% タイトル
+  \begin{frame}[noframenumbering,plain]{}{}%
+    \begin{tikzpicture}[remember picture, overlay,every node/.style={inner sep=0pt,outer sep=0pt}]%
+      %\draw[very thin,dashed,color=cyan,step=1cm] (current page.north west) grid (current page.south east);%
+      \node[above right] at ($(current page.south west)+(\lmargin,1em)$){\scriptsize e-mail : \href{mailto:dummy@example.com}{dummy@example.com}};%
+      \node[above left] at ($(current page.south east)+(-\rmargin,1em-2pt)$){\includegraphics[width=3cm]{dummy_logo_black.png}};%
+      \node[below left] at ($(current page.north east)+(-\rmargin,-1em+2pt)$){\includegraphics[width=3cm]{dummy_logo_black.png}};%
+      \node[below right] at ($(current page.north west)+(\lmargin,-1em+2pt)$){\includegraphics[width=3cm]{dummy_logo_black.png}};%
+    \end{tikzpicture}%
+    \titlepage
+    %% 部外秘をオーバーレイ
+    %\begin{tikzpicture}[remember picture, overlay,every node/.style={inner sep=1pt,outer sep=1pt}]%
+    % \node[color=red!30!white,draw,line width=10pt,rectangle,font=\gtfamily,scale=4,rotate=30] at (current page.center){部外秘};%
+    %\end{tikzpicture}%
+  \end{frame}
+
+  %% 導入部
+  %\setcounter{section}{-1} % セクション番号を0から始める
+  %\subfile{contents/0}
+
+  %% 目次
+  \begin{frame}{目次}{}
+    \tableofcontents%[hideallsubsections]
+  \end{frame}
+
+  %% 本編
+  \subfile{contents/1}
+  \subfile{contents/2}
+  \subfile{contents/3}
+
+  %% 参考文献
+  \section*{参考文献}
+  \begin{frame}[noframenumbering,plain]{参考文献}{}
+    \bibliography{ref}
+  \end{frame}
+\end{document}

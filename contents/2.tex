@@ -1,0 +1,37 @@
+\documentclass[../main]{subfiles}
+
+\setcounter{section}{2}
+\addtocounter{section}{-1}
+\begin{document}
+\section{次の節}
+\begin{frame}{その他の色確認}{}
+  \begin{columns}
+    \begin{column}[t]{0.5\textwidth-0.01\textwidth}
+      箇条書き(\texttt{\textbackslash itemize})
+      \begin{itemize}
+        \item 最初
+        \item 真ん中
+        \item 最後
+      \end{itemize}
+    \end{column}
+    \begin{column}[t]{0.5\textwidth-0.01\textwidth}
+      \ruby{箇条}{か|じょう}書き(\texttt{\textbackslash enumerate})
+      \begin{enumerate}[(i)]
+        \item 最初
+        \item 真ん中
+        \item 最後
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+
+  \begin{block}{block title}
+    block body
+  \end{block}
+  \begin{alertblock}{alertblock title}
+    alertblock body
+  \end{alertblock}
+  \begin{exampleblock}{exampleblock title}
+    exampleblock body
+  \end{exampleblock}
+\end{frame}
+\end{document}

@@ -1,0 +1,57 @@
+\documentclass[../main]{subfiles}
+
+\setcounter{section}{1}
+\addtocounter{section}{-1}
+\begin{document}
+\section{節を分割してわかりやすく}
+
+\begin{frame}{ここにタイトル}{}
+
+  \begin{dfn}[定義のタイトル]
+    任意の$n\in\mathbb{N}_{>1}$に対して,
+    約数が$1$と$n$の2つのみであるとき
+    $n$を素数という, i.e.
+    \[
+      \# \left\{ \rule{0pt}{2ex} k \relmid k|n \right\}=2
+    \]
+    を満たす$2$以上の整数が素数である.
+  \end{dfn}
+
+  \pause
+  \begin{columns}[totalwidth=\textwidth]
+    \begin{column}[t]{0.6\textwidth-0.01\textwidth}
+      \vspace{-0.5em}
+
+      $X$ : 適当な空間
+      \\
+      $V$ : $X$の開集合
+      \\[1em]
+      ( 見えない部分を透過させる設定 )
+    \end{column}
+    \begin{column}[T]{0.4\textwidth-0.01\textwidth}
+      \centering
+      \vspace{0.3em}
+      \begin{adjustbox}{max width=\textwidth}
+        \begin{tikzpicture}[every node/.style={inner sep=1pt,outer sep=1pt}]%
+          \begin{scope}
+            \draw[thick] (-2.5,1) rectangle (2.5,-1.0);
+            \draw (-1.8,1.03)node[rectangle,fill=white]{\textbf{$\Omega$}};
+          \end{scope}
+          \begin{scope}
+            \draw[thick,fill=red,fill opacity=0.25] (-0.6,0) circle (1.2 and 0.5);
+            \draw (-1.2,0.5)node[rectangle,fill=bgcolor]{\textbf{$A$}};
+          \end{scope}
+          \begin{scope}
+            \draw[thick,fill=blue,fill opacity=0.25] (0.6,0) circle (1.2 and 0.5);
+            \draw (1.2,0.5)node[rectangle,fill=bgcolor]{\textbf{$B$}};
+          \end{scope}
+        \end{tikzpicture}
+      \end{adjustbox}
+      いい感じのベン図1
+    \end{column}
+  \end{columns}
+
+  より詳しくは\,
+  参考になる文献\footnote[1]{\cite{book:dummy}著者. 本のタイトル. 出版社, 出版年1900.}
+  を参照.
+\end{frame}
