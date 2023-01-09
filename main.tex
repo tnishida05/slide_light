@@ -5,10 +5,14 @@
 \usepackage{luatexja}
 
 %% 作図用パッケージ
+%% [TikZ & PGF のマニュアル](https://www.ctan.org/pkg/pgf)
 \usepackage{graphicx,xcolor}
 \usepackage{tikz}
 \usetikzlibrary{intersections,calc,arrows,cd,decorations.pathmorphing}
 \tikzset{ ampersand replacement=\& }
+
+%% 画像を手軽に透過する
+\usepackage{transparent}
 
 %% 位置調整用パッケージ
 \usepackage[absolute,overlay]{textpos}
@@ -19,32 +23,12 @@
 \graphicspath{{./images}}
 
 %% beamerのテーマの設定
+%% [Beamerのマニュアル](https://ctan.org/pkg/beamer)
+%% [Metropolisのマニュアル](https://ctan.org/pkg/beamertheme-metropolis)
 \usetheme[block=fill,progressbar=frametitle,numbering=fraction]{metropolis}
 \usefonttheme{professionalfonts}
 \setbeamertemplate{section in toc}[sections numbered]
 \setbeamertemplate{subsection in toc}[subsections numbered]
-
-%% Section見出しページを再定義 (見出しの幅を広げる)
-\makeatletter
-\setbeamertemplate{section page}{
-  \centering
-  \begin{minipage}{\linewidth}
-    \raggedright
-    \usebeamercolor[fg]{section title}
-    \usebeamerfont{section title}
-    \insertsectionhead\\[-1ex]
-    \usebeamertemplate*{progress bar in section page}
-    \par
-    \ifx\insertsubsectionhead\@empty\else%
-      \usebeamercolor[fg]{subsection title}%
-      \usebeamerfont{subsection title}%
-      \insertsubsectionhead
-    \fi
-  \end{minipage}
-  \par
-  \vspace{\baselineskip}
-}
-\makeatother
 
 %% フォント指定(必ずbeamerテーマ設定の後)
 %\usepackage[ipaex]{luatexja-preset}
@@ -98,12 +82,72 @@
 %\setbeamercolor{structure}{fg=structurefgcolor}
 %\setbeamercolor{footline}{fg=fgcolor,bg=footlinebgcolor}
 
-%% 余白の調整
-% タイトルページのemailやlogoをtikzで作っているので変数(\lmargin,\rmargin)を変更すること
+%% 余白の調整 ( 左右の空白 )
 \newcommand{\lmargin}{2em}
 \newcommand{\rmargin}{2em}
-% 左右の空白
 \setbeamersize{text margin left=\lmargin, text margin right=\rmargin}
+
+%% タイトルページを再定義
+\makeatletter
+\setbeamertemplate{title page}{
+  \begin{minipage}[b][\paperheight]{\textwidth}%
+    \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi%
+    \vfill%
+    \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi%
+    \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi%
+    \usebeamertemplate*{title separator}%
+    \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi%
+    \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi%
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi%
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{email}\fi%
+    \vfill%
+    \vspace*{1mm}%
+  \end{minipage}%
+}
+\makeatother
+%% タイトル背景画像の再定義 (上部の余白の調整)
+\makeatletter
+\setbeamertemplate{title graphic}{
+  \vbox to 0pt {
+    \vspace*{1em}
+    \inserttitlegraphic%
+  }%
+  \nointerlineskip%
+}
+\makeatother
+%% email 定義
+%% [変数定義のtips](https://tex.stackexchange.com/questions/350511/latex-beamer-create-own-variable)
+\newcommand\insertemail{}
+\newcommand\email[1]{\renewcommand\insertemail{#1}}
+\makeatletter
+\setbeamertemplate{email}{
+  \scriptsize e-mail\,: \insertemail
+}
+\makeatother
+
+%% セクション見出しページを再定義 (見出しの幅を広げる)
+\makeatletter
+\setbeamertemplate{section page}{
+  \centering
+  \begin{minipage}{\linewidth}
+    \raggedright
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\\[-1ex]
+    \usebeamertemplate*{progress bar in section page}
+    \par
+    \ifx\insertsubsectionhead\@empty\else%
+      \usebeamercolor[fg]{subsection title}%
+      \usebeamerfont{subsection title}%
+      \insertsubsectionhead
+    \fi
+  \end{minipage}
+  \par
+  \vspace{\baselineskip}
+}
+\makeatother
+
+
 % 注釈の文字サイズ
 \setbeamerfont{footnote}{size=\tiny}
 
@@ -111,13 +155,13 @@
 % ページ番号の文字サイズ
 \setbeamerfont{frame numbering}{size=\scriptsize}
 % 変数を変更して高さを調整 ( デフォルトは 3ex )
-\newcommand{\footlineheight}{1ex}
+\newcommand{\footlineheight}{0pt}
 \setbeamertemplate{footline}{%
 \begin{beamercolorbox}[wd=\textwidth, sep=\footlineheight]{footline}%
 \usebeamerfont{page number in head/foot}%
 \usebeamertemplate*{frame footer}%
 \hfill%
-\usebeamertemplate*{frame numbering}%
+\raisebox{3pt}[0pt][0pt]{\usebeamertemplate*{frame numbering}\hspace{3pt}}%
 \end{beamercolorbox}%
 }
 
@@ -137,6 +181,8 @@
 \usepackage{enumerate}
 
 %% ルビ
+%% \ruby{塩}{しお}, \ruby{味噌}{み|そ}, \ruby[g]{杜鵑}{ほととぎす}
+%% [参考](https://qiita.com/zr_tex8r/items/42466cbcbeb670a3a2dc)
 \usepackage{pxrubrica}
 
 %% AMS関連と数学記号
@@ -147,7 +193,7 @@
 \usepackage{mathrsfs}
 \usepackage{mathtools}
 
-%% 人名定義
+%% 人名定義 (必要に応じて `` \Cech{} '' など区切り文字 `` {} '' を入れる)
 \newcommand{\Cech}{\v{C}ech}
 \newcommand{\Hormander}{H\"{o}rmander}
 \newcommand{\Frechet}{Fr\'echet}
@@ -226,29 +272,26 @@
   いい感じに設定されたmetropolisテンプレ
 }
 \subtitle{
-  タイトルページの四つ角にロゴも入れられる
+  ページ隅にロゴも入れられる
 }
 \author[お名前]{あなたのお名前\inst{1}}
 \institute[所属]{\inst{1}所属している団体名}
 \date[日付]{発表する研究集会情報や日付など}
 
+\email{\href{mailto:dummy@example.com}{dummy@example.com}}
+
+\titlegraphic{\flushright%
+  %\transparent{0.4}%
+  \includegraphics[height=0.1\pageheight]{%
+    dummy_logo_black.png%
+    }%
+}
+
 %% ここから本文
 \begin{document}
-
   %% タイトル
-  \begin{frame}[noframenumbering,plain]{}{}%
-    \begin{tikzpicture}[remember picture, overlay,every node/.style={inner sep=0pt,outer sep=0pt}]%
-      %\draw[very thin,dashed,color=cyan,step=1cm] (current page.north west) grid (current page.south east);%
-      \node[above right] at ($(current page.south west)+(\lmargin,1em)$){\scriptsize e-mail : \href{mailto:dummy@example.com}{dummy@example.com}};%
-      \node[above left] at ($(current page.south east)+(-\rmargin,1em-2pt)$){\includegraphics[width=3cm]{dummy_logo_black.png}};%
-      \node[below left] at ($(current page.north east)+(-\rmargin,-1em+2pt)$){\includegraphics[width=3cm]{dummy_logo_black.png}};%
-      \node[below right] at ($(current page.north west)+(\lmargin,-1em+2pt)$){\includegraphics[width=3cm]{dummy_logo_black.png}};%
-    \end{tikzpicture}%
+  \begin{frame}[noframenumbering,plain]{}{}
     \titlepage
-    %% 部外秘をオーバーレイ
-    %\begin{tikzpicture}[remember picture, overlay,every node/.style={inner sep=1pt,outer sep=1pt}]%
-    % \node[color=red!30!white,draw,line width=10pt,rectangle,font=\gtfamily,scale=4,rotate=30] at (current page.center){部外秘};%
-    %\end{tikzpicture}%
   \end{frame}
 
   %% 導入部
@@ -256,7 +299,7 @@
   %\subfile{contents/0}
 
   %% 目次
-  \begin{frame}{目次}{}
+  \begin{frame}[noframenumbering,plain]{目次}{}
     \tableofcontents%[hideallsubsections]
   \end{frame}
 
