@@ -1,0 +1,181 @@
+%% 日本語
+\usepackage{luatexja}
+
+%% 作図用パッケージ
+%% [TikZ & PGF のマニュアル](https://www.ctan.org/pkg/pgf)
+\usepackage{graphicx,xcolor}
+\usepackage{tikz}
+\usetikzlibrary{intersections,calc,arrows,cd,decorations.pathmorphing}
+\tikzset{ ampersand replacement=\& }
+
+%% 画像を手軽に透過する
+\usepackage{transparent}
+
+%% 位置調整用パッケージ
+\usepackage[absolute,overlay]{textpos}
+\usepackage{adjustbox}
+\usepackage{multicol}
+
+%% beamerのテーマの設定
+%% [Beamerのマニュアル](https://ctan.org/pkg/beamer)
+%% [Metropolisのマニュアル](https://ctan.org/pkg/beamertheme-metropolis)
+\usetheme[block=fill,progressbar=frametitle,numbering=fraction]{metropolis}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+%% フォント指定(必ずbeamerテーマ設定の後)
+%\usepackage[ipaex]{luatexja-preset}
+\usepackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
+%\usepackage[haranoaji,deluxe]{luatexja-preset}
+\usepackage{luatexja-fontspec}
+% 欧文フォント (順に rm,sf,tt)
+\setmainfont[Ligatures=TeX]{TeXGyreTermes}
+\setsansfont[Ligatures=TeX]{TeXGyreHeros}
+\setmonofont[Ligatures=TeX]{Inconsolatazi4}
+% 日本語フォント (順に rm,sf,tt)
+\setmainjfont[BoldFont=HaranoAjiMincho-Bold]{HaranoAjiMincho-Regular}
+\setsansjfont[BoldFont=HaranoAjiGothic-Medium]{HaranoAjiGothic-Regular}
+%\setmonojfont[Ligatures=TeX]{Inconsolatazi4}
+
+% ギリシャ語などのスペース調整
+\ltjsetparameter{jacharrange={-2,-3,-8}}
+
+%% 和文の既定フォントをゴシック体に変更
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+
+%% 色の設定
+\definecolor{BrightGray}{HTML}{F6F6F6}
+\definecolor{LightGray}{HTML}{E6E6E6}
+\definecolor{Gray}{HTML}{DDDDDD}
+\definecolor{DarkGray}{HTML}{222222}
+\definecolor{BrightBlue}{HTML}{4a5560}
+\definecolor{LightBlue}{HTML}{303b46}
+\definecolor{BlackBlue}{HTML}{16212c}
+%\definecolor{mLightBrown}{HTML}{EB811B} % metropolis default color
+%\definecolor{mLightGreen}{HTML}{14B03D} % metropolis default color
+
+% 基本色
+\colorlet{fgcolor}{DarkGray}
+\colorlet{bgcolor}{white}
+% その他の色
+\colorlet{titlebgcolor}{LightGray}
+\colorlet{bodybgcolor}{BrightGray}
+\colorlet{examplefgcolor}{mLightGreen!93!black}
+\colorlet{alertfgcolor}{mLightBrown!93!black}
+\colorlet{structurefgcolor}{cyan!93!black}
+\colorlet{footlinebgcolor}{BrightGray}
+
+% 配色
+\setbeamercolor{frametitle}{fg=fgcolor,bg=bgcolor}
+\setbeamercolor{normal text}{fg=fgcolor,bg=bgcolor}
+\setbeamercolor{block title}{fg=fgcolor,bg=titlebgcolor}
+\setbeamercolor{block body}{fg=fgcolor,bg=bodybgcolor}
+\setbeamercolor{example text}{fg=examplefgcolor}
+\setbeamercolor{alerted text}{fg=alertfgcolor}
+%\setbeamercolor{structure}{fg=structurefgcolor}
+%\setbeamercolor{footline}{fg=fgcolor,bg=footlinebgcolor}
+
+%% 余白の調整 ( 左右の空白 )
+\newcommand{\lmargin}{2em}
+\newcommand{\rmargin}{2em}
+\setbeamersize{text margin left=\lmargin, text margin right=\rmargin}
+
+%% タイトルページを再定義
+\makeatletter
+\setbeamertemplate{title page}{
+  \begin{minipage}[b][\paperheight]{\textwidth}%
+    \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi%
+    \vfill%
+    \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi%
+    \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi%
+    \usebeamertemplate*{title separator}%
+    \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi%
+    \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi%
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi%
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{email}\fi%
+    \vfill%
+    \vspace*{1mm}%
+  \end{minipage}%
+}
+\makeatother
+%% タイトル背景画像の再定義 (上部の余白の調整)
+\makeatletter
+\setbeamertemplate{title graphic}{
+  \vbox to 0pt {
+    \vspace*{1em}
+    \inserttitlegraphic%
+  }%
+  \nointerlineskip%
+}
+\makeatother
+%% email 定義
+%% [変数定義のtips](https://tex.stackexchange.com/questions/350511/latex-beamer-create-own-variable)
+\newcommand\insertemail{}
+\newcommand\email[1]{\renewcommand\insertemail{#1}}
+\makeatletter
+\setbeamertemplate{email}{
+  \scriptsize e-mail\,: \insertemail
+}
+\makeatother
+
+%% セクション見出しページを再定義 (見出しの幅を広げる)
+\makeatletter
+\setbeamertemplate{section page}{
+  \centering
+  \begin{minipage}{\linewidth}
+    \raggedright
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\\[-1ex]
+    \usebeamertemplate*{progress bar in section page}
+    \par
+    \ifx\insertsubsectionhead\@empty\else%
+      \usebeamercolor[fg]{subsection title}%
+      \usebeamerfont{subsection title}%
+      \insertsubsectionhead
+    \fi
+  \end{minipage}
+  \par
+  \vspace{\baselineskip}
+}
+\makeatother
+
+
+% 注釈の文字サイズ
+\setbeamerfont{footnote}{size=\tiny}
+
+%% footline 再定義
+% ページ番号の文字サイズ
+\setbeamerfont{frame numbering}{size=\scriptsize}
+% 変数を変更して高さを調整 ( デフォルトは 3ex )
+\newcommand{\footlineheight}{0pt}
+\setbeamertemplate{footline}{%
+\begin{beamercolorbox}[wd=\textwidth, sep=\footlineheight]{footline}%
+\usebeamerfont{page number in head/foot}%
+\usebeamertemplate*{frame footer}%
+\hfill%
+\raisebox{3pt}[0pt][0pt]{\usebeamertemplate*{frame numbering}\hspace{3pt}}%
+\end{beamercolorbox}%
+}
+
+%\setbeamerfont{normal text}{size=\normalsize, series=\bfseries}
+%\AtBeginDocument{\usebeamerfont{normal text}}
+
+%% 非表示要素を透過
+\setbeamercovered{transparent=30}
+
+%% ナビゲーションバー(右下の灰色のやつ)を消す
+%\setbeamertemplate{navigation symbols}{}
+
+%% 参考文献
+%\bibliographystyle{jplain} % アルファベット順
+\bibliographystyle{junsrt} % 引用順
+\setbeamertemplate{bibliography item}[text]
+
+%% URL を \url{ ～ } で書ける. リンクの色は印刷用に消している.
+%% (その他のパッケージが読み込まれたか確認するので, なるべく後ろで読み込む)
+%% bookmark は, hyperrefを含む. xurl は, 長いリンクを快適にするパッケージ.
+\usepackage{bookmark}
+\usepackage{xurl}
+\hypersetup{unicode,bookmarksnumbered=true,hidelinks,final}

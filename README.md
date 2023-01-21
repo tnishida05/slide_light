@@ -26,10 +26,12 @@ pbibtex output/output.aux
 スライドを追加する場合は、[`contents`](/contents)の中のファイルを編集してください。
 [`contents`](/contents)にファイルを追加したときは[`main.tex`](/main.tex)で参照するのを忘れないでください。
 
+数学記号や定理の設定は、[`styles/mysetting.sty`](/styles/mysetting.sty)を編集してください。
+
 ## 色設定について
 
 このテンプレートは、`metropolis`というテーマを利用しています。
-テーマの設定は、[`mytheme.sty`](/mytheme.sty)で行っています。
+テーマの設定は、[`styles/mytheme.sty`](/styles/mytheme.sty)で行っています。
 
 全体的に「脱色」をイメージして色を設定しました。
 薄い色でなければ、多少追加して使ってもデザインを崩さないと思います。
